@@ -1,5 +1,8 @@
+import os
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Type, Union
+
+from docx.document import Document
 
 from bisheng.settings import settings
 from bisheng.template.field.base import TemplateField
@@ -10,6 +13,10 @@ from langchain.agents import AgentExecutor
 from langchain.document_loaders.base import BaseLoader
 from langchain.chains.base import Chain
 from pydantic import BaseModel
+import requests
+import tempfile
+from pathlib import Path
+from urllib.parse import urlparse
 
 # Assuming necessary imports for Field, Template, and FrontendNode classes
 skip_llm = {'CombineDocsChain'}
@@ -50,7 +57,7 @@ class LangChainTypeCreator(BaseModel, ABC):
 
     @abstractmethod
     def get_signature(
-        self, name: str
+            self, name: str
     ) -> Union[Optional[Dict[Any, Any]], FrontendNode]:
         pass
 
@@ -168,6 +175,32 @@ class CustomAgentExecutor(AgentExecutor, ABC):
 class CustomDocumentLoadersExecutor(BaseLoader, ABC):
     """Custom Document Loaders"""
 
+    # def __init__(self, file_path: str):
+    #     """Initialize with a file path."""
+    #     self.file_path = file_path
+    #     self.web_path = None
+    #     if "~" in self.file_path:
+    #         self.file_path = os.path.expanduser(self.file_path)
+    #
+    #     # If the file is a web path, download it to a temporary file, and use that
+    #     if not os.path.isfile(self.file_path) and self._is_valid_url(self.file_path):
+    #         r = requests.get(self.file_path)
+    #
+    #         if r.status_code != 200:
+    #             raise ValueError(
+    #                 "Check the url of your file; returned status code %s"
+    #                 % r.status_code
+    #             )
+    #
+    #         self.web_path = self.file_path
+    #         self.temp_dir = tempfile.TemporaryDirectory()
+    #         temp_pdf = Path(self.temp_dir.name) / "tmp.pdf"
+    #         with open(temp_pdf, mode="wb") as f:
+    #             f.write(r.content)
+    #         self.file_path = str(temp_pdf)
+    #     elif not os.path.isfile(self.file_path):
+    #         raise ValueError("File path %s is not a valid file or url" % self.file_path)
+
     @staticmethod
     def function_name():
         return 'CustomDocumentLoaders'
@@ -176,8 +209,18 @@ class CustomDocumentLoadersExecutor(BaseLoader, ABC):
     def initialize(cls, *args, **kwargs):
         pass
 
+    # @staticmethod
+    # def _is_valid_url(url: str) -> bool:
+    #     """Check if the url is valid."""
+    #     parsed = urlparse(url)
+    #     return bool(parsed.netloc) and bool(parsed.scheme)
+
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    # def load(self) -> List[Document]:
+    #     pass
 
     # def run(self, *args, **kwargs):
     #     return super().run(*args, **kwargs)

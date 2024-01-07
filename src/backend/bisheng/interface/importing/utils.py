@@ -191,6 +191,9 @@ def import_documentloader(documentloader: str) -> Any:
 
     if documentloader in document_loaders.__all__:
         return import_class(f'bisheng_langchain.document_loaders.{documentloader}')
+    if documentloader in ['SimpleDirectoryReaderLoader']:
+        from bisheng.interface.document_loaders.custom import SimpleDirectoryReaderLoader
+        return import_class(f'bisheng.interface.document_loaders.custom.{documentloader}')
     return import_class(f'langchain.document_loaders.{documentloader}')
 
 

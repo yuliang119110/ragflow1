@@ -240,13 +240,13 @@ class DocumentLoaderFrontNode(FrontendNode):
         elif self.template.type_name in self.file_path_templates:
             self.template.add_field(self.file_path_templates[self.template.type_name])
         elif self.template.type_name in {
-                'WebBaseLoader',
-                'AZLyricsLoader',
-                'CollegeConfidentialLoader',
-                'HNLoader',
-                'IFixitLoader',
-                'IMSDbLoader',
-                'GutenbergLoader',
+            'WebBaseLoader',
+            'AZLyricsLoader',
+            'CollegeConfidentialLoader',
+            'HNLoader',
+            'IFixitLoader',
+            'IMSDbLoader',
+            'GutenbergLoader',
         }:
             name = 'web_path'
         elif self.template.type_name in {'GutenbergLoader'}:
@@ -254,10 +254,10 @@ class DocumentLoaderFrontNode(FrontendNode):
         elif self.template.type_name in {'GitbookLoader'}:
             name = 'web_page'
         elif self.template.type_name in {
-                'DirectoryLoader',
-                'ReadTheDocsLoader',
-                'NotionDirectoryLoader',
-                'PyPDFDirectoryLoader',
+            'DirectoryLoader',
+            'ReadTheDocsLoader',
+            'NotionDirectoryLoader',
+            'PyPDFDirectoryLoader',
         }:
             name = 'path'
             display_name = 'Local directory'
@@ -494,25 +494,30 @@ def build_directory_loader_fields():
         max_concurrency,
     )
 
+
 class SimpleDirectoryReaderLoaderNode(FrontendNode):
     name: str = 'SimpleDirectoryReaderLoader'
     template: Template = Template(
         type_name='simple_directory_reader_loader',
         fields=[
             TemplateField(
-                field_type='str',
+                field_type='fileNode',
                 required=True,
                 placeholder='',
                 is_list=False,
                 show=True,
                 multiline=False,
                 value='',
-                name='file+_path',
+                type='fileType',
+                name='file_path',
+                suffixes=['.pdf'],
+                fileTypes=['pdf'],
             ),
         ],
     )
-    description: str = """Construct an SQL Shrimp agent from an LLM and tools."""
-    base_classes: list[str] = ['Document', 'function']
+    description: str = """使用llama-index中的 SimpleDirectoryReader组件进行loader"""
+    base_classes: list[str] = ['Document','function']
+    output_types: list[str] = ['Document']
 
     def to_dict(self):
         return super().to_dict()

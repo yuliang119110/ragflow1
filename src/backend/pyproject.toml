@@ -76,7 +76,9 @@ pymongo = "^4.4.0"
 certifi = "^2023.5.7"
 psycopg = "^3.1.9"
 psycopg-binary = "^3.1.9"
-#llama-index = { version = "^0.9.23", extras = ["openai=1.6.1", "SQLAlchemy=2.0.24"] }
+llama-index = "^0.4.21"
+#llama-index = { version = "0.9.24", extras = ["openai=1.6.1", "SQLAlchemy=2.0.24"] }
+PyPDF2 = '^3.0.1'
 
 [tool.poetry.dev-dependencies]
 black = "^23.1.0"
@@ -96,9 +98,9 @@ types-pyyaml = "^6.0.12.8"
 [tool.poetry.extras]
 deploy = ["langchain-serve"]
 
-[tool.poetry.dependencies.llama-index]
-version = "^0.9.23"
-extras = ["openai=1.6.1", "SQLAlchemy=2.0.24"]
+#[tool.poetry.dependencies.llama-index]
+#version = "^0.9.23"
+#extras = ["openai=1.6.1", "SQLAlchemy=2.0.24"]
 
 
 [tool.pytest.ini_options]

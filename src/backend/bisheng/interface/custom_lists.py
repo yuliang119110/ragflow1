@@ -3,6 +3,7 @@ from typing import Any
 
 from bisheng.interface.agents.custom import CUSTOM_AGENTS
 from bisheng.interface.chains.custom import CUSTOM_CHAINS
+# from bisheng.interface.document_loaders.custom import CUSTOM_LOADERS
 from bisheng.interface.embeddings.custom import CUSTOM_EMBEDDING
 from bisheng.interface.importing.utils import import_class
 from bisheng_langchain import chat_models
@@ -82,4 +83,5 @@ CUSTOM_NODES = {
     **CUSTOM_AGENTS,
     **CUSTOM_CHAINS,
     **CUSTOM_EMBEDDING,
+    # **CUSTOM_LOADERS,
 }  # type: ignore
